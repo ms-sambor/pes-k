@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorting Game: Fruits vs Vegetables</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background-color: #f0f8ff;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .word-bank, .category {
+      border: 2px dashed #aaa;
+      min-height: 150px;
+      padding: 10px;
+      width: 250px;
+      background: #fff;
+      border-radius: 8px;
+    }
+
+    .draggable {
+      padding: 8px 12px;
+      margin: 5px;
+      background-color: #5bc0de;
+      color: white;
+      border-radius: 5px;
+      cursor: grab;
+      display: inline-block;
+    }
+
+    .category-title {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Drag the Items into the Correct Category</h2>
+
+<div class="container">
+  <div class="word-bank" id="word-bank">
+    <div class="draggable" draggable="true" id="apple">Apple</div>
+    <div class="draggable" draggable="true" id="carrot">Carrot</div>
+    <div class="draggable" draggable="true" id="banana">Banana</div>
+    <div class="draggable" draggable="true" id="broccoli">Broccoli</div>
+    <div class="draggable" draggable="true" id="grape">Grape</div>
+    <div class="draggable" draggable="true" id="lettuce">Lettuce</div>
+  </div>
+
+  <div class="category" id="fruits">
+    <div class="category-title">Fruits</div>
+  </div>
+
+  <div class="category" id="vegetables">
+    <div class="category-title">Vegetables</div>
+  </div>
+</div>
+
+<script>
+  const draggables = document.querySelectorAll('.draggable');
+  const zones = document.querySelectorAll('.word-bank, .category');
+
+  draggables.forEach(item => {
+    item.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', e.target.id);
+    });
+  });
+
+  zones.forEach(zone => {
+    zone.addEventListener('dragover', e => e.preventDefault());
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      const id = e.dataTransfer.getData('text/plain');
+      const draggedEl = document.getElementById(id);
+      if (draggedEl) {
+        zone.appendChild(draggedEl);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
